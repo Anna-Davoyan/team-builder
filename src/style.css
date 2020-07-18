@@ -1,0 +1,38 @@
+.wrapper {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 960px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 30px;
+}
+
+.ui.stacked.segment:after{
+    border-top: 0px solid rgba(34,36,38,.15)!important;
+     background: transparent!important;
+}
+.react-datepicker-wrapper{
+    width: 100%;
+    margin: 0 0 1em;
+}
+.datePickerLabel{
+    display: block;
+    margin: 0 0 .28571429rem 0;
+    color: rgba(0,0,0,.87);
+    font-size: .92857143em;
+    font-weight: 700;
+    text-transform: none;
+}
+.ui.divided.grid:not([class*="vertically divided"])>.row>.column{
+    box-shadow:0px 0px 0px 0px!important;
+}
+.sendButton{
+    margin-top: 22px!important;
+}
+@media only screen and (max-width: 767px){
+    .ui.stackable.divided:not(.vertically).grid>.row>.column{
+        border-top: 0!important;
+        padding-top: 0rem!important;
+    }
+
+}
