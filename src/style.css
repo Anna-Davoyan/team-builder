@@ -29,6 +29,7 @@
 .sendButton{
     margin-top: 22px!important;
 }
+
 @media only screen and (max-width: 767px){
     .ui.stackable.divided:not(.vertically).grid>.row>.column{
         border-top: 0!important;

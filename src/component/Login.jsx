@@ -1,75 +1,117 @@
-import React, {Component} from "react";
-import {Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';
-import {Link} from "react-router-dom";
-import {connect} from "react-redux";
-import {registerUser} from "../actions/authActions";
+import React, { Component } from 'react';
+import { Button, Form, Grid, Header, Message } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { userLogin } from '../store/actions/authActions';
 
 
 class Login extends Component {
-    state={
-        login:'',
-        password:'',
+    state = {
+        email: 'davoyanan1@gmail.com',
+        password: 'loveHarut4ever',
+        error: false,
+        remember: false,
+        loading: false
     };
 
     handleChange = (event) => {
-        event.target.name = event.target.value;
         this.setState({
             [event.target.name]: event.target.value
-        })
+        });
 
     };
+    onChangeCheck = () => {
+        this.setState({ remember: !this.state.remember });
+    };
 
-    onClickHandler = () => {
+    onLoginClickHandler = () => {
         const userInfo = this.state;
-        this.props.userLogin(userInfo,this.props.history);
+        if (userInfo.email === '' || userInfo.password === '') {
+            return this.setState({ error: true });
+        }
+
+        this.setState({ loading: true, error: false });
+
+        this.props.userLogin(userInfo, this.state.remember).then(user => {
+            this.setState({ loading: false });
+
+            if (user) {
+                this.props.history.push('/user/profile');
+            }
+        });
     };
 
     render() {
+
+        let errors = [];
+        if (this.state.error) {
+            errors.push('Missing required Fields.');
+        }
+        if (this.props.error) {
+            errors.push(this.props.error);
+        }
         return (
-            <>
-                <Grid textAlign='center' style={{height: '100vh'}} verticalAlign='middle'>
-                    <Grid.Column style={{maxWidth: 450}}>
-                        <Header as='h2' color='teal' textAlign='center'>
-                            Log-in to your account
-                        </Header>
-                        <Form size='large'>
-                            <Segment stacked>
-                                <Form.Input
-                                    fluid
-                                    icon='mail'
-                                    iconPosition='left'
-                                    placeholder='E-mail address'
-                                    onChange={this.handleChange}
-                                />
-                                <Form.Input
-                                    fluid
-                                    icon='lock'
-                                    iconPosition='left'
-                                    placeholder='Password'
-                                    type='password'
-                                    onChange={this.handleChange}
-                                />
-                                <Form.Checkbox label='Remember me'/>
-                                <Button color='teal' fluid size='large' onClick={this.onClickHandler}>
-                                    Login
-                                </Button>
-                            </Segment>
-                        </Form>
-                        <Message>
-                            New to us? <Link to='/auth/register'>Sign Up</Link>
+            <Form size='large'>
+                <Header as='h2' color='teal' textAlign='center'>
+                    Log-in to your account
+                </Header>
+
+                <Grid textAlign='center' verticalAlign='middle'>
+                    <Grid.Column style={{ maxWidth: 450 }}>
+                        {errors.length !== 0 &&
+                        <Message negative>
+                            <ul>
+                                {errors.map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                ))}
+                            </ul>
                         </Message>
+                        }
+                        <Form.Input
+                            name='email'
+                            fluid
+                            icon='mail'
+                            iconPosition='left'
+                            value={this.state.email}
+                            placeholder='E-mail address'
+                            onChange={this.handleChange}
+                        />
+                        <Form.Input
+                            name='password'
+                            fluid
+                            icon='lock'
+                            iconPosition='left'
+                            placeholder='Password'
+                            value={this.state.password}
+                            type='password'
+                            onChange={this.handleChange}
+                        />
+                        <Form.Checkbox
+                            name='remember'
+                            label='Remember me'
+                            defaultChecked={this.state.remember}
+                            onChange={this.onChangeCheck}
+                        />
+                        <Button
+                            loading={this.state.loading}
+                            color='teal'
+                            fluid
+                            size='large'
+                            onClick={this.onLoginClickHandler}>
+                            Login
+                        </Button>
                     </Grid.Column>
                 </Grid>
-
-            </>
-        )
+            </Form>
+        );
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        userLogin: (userInfo, history) => dispatch(registerUser(userInfo, history))
-    }
+function mapStateToProps(state) {
+    return { error: state.auth.loginError };
+}
+
+const mapDispatchToProps = {
+    userLogin
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

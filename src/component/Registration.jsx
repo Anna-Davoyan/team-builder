@@ -1,53 +1,54 @@
-import React, {Component} from "react";
-import {Button, Form, Grid, Header, Message} from 'semantic-ui-react'
-import {connect} from "react-redux";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
-import {fetchCompanies, registerUser} from '../actions/authActions';
-import moment from 'moment'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { Button, Form, Grid, Header, Message } from 'semantic-ui-react';
+import DatePicker from 'react-datepicker';
+import { fetchCompanies } from '../store/actions/companiesActions';
+import 'react-datepicker/dist/react-datepicker.css';
+import { registerUser } from '../store/actions/authActions';
 
 
 class Registration extends Component {
     state = {
         form: {
-            email: `wdewfew${Date.now()}@gmail.com`,
-            password: "loveHarut4ever",
-            confirmPass: "loveHarut4ever",
-            firstName: "aaa",
-            lastName: "aaayan",
+            email: 'davoyanan4@gmail.com',
+            password: 'loveHarut4ever',
+            confirmPass: 'loveHarut4ever',
+            firstName: 'Anna',
+            lastName: 'Davoyan',
             birthDate: moment().format('YYYY-MM-DD'),
-            avatarUrl: "https://www.google.com/search?q=img&sxsrf=ALeKk03QlzAjOhrZtrnheCDjoecUys8F8g:1594910562040&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiBwf7rgNLqAhVKxIUKHRx5CNUQ_AUoAXoECBsQAw&biw=1440&bih=703#imgrc=RYBz6TYw2D7ZZM",
+            avatarUrl: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
             companyId: 1,
-            jsExperience: 1,
-            reactExperience: 1,
-            sex: "male"
+            jsExperience: 0,
+            reactExperience: 0,
+            sex: 'female'
         },
         confirmPasswordError: false,
         passwordError: false,
-        emptyFieldsError: false,
+        emptyFieldsError: false
     };
 
     componentDidMount() {
-        this.props.companiesFetched();
+        this.props.fetchCompanies();
     }
 
 
     handleChange = (event) => {
-        const form = {...this.state.form};
+        const form = { ...this.state.form };
         form[event.target.name] = event.target.value;
-        this.setState({form})
+        this.setState({ form });
     };
 
     handleSelectChange = (event, data) => {
-        const form = {...this.state.form};
+        const form = { ...this.state.form };
         form[data.name] = data.value;
         this.setState({
             form
-        })
+        });
     };
 
     handleChangeDate = date => {
-        const form = {...this.state.form};
+        const form = { ...this.state.form };
         form.birthDate = moment(date.birthDate).format('YYYY-MM-DD');
         this.setState({
             form
@@ -55,26 +56,26 @@ class Registration extends Component {
     };
 
     handleSignUp = () => {
-        let {form} = this.state;
-        if (form.firstName === "" || form.lastName === ""
-            || form.email === "" || form.password === ""
-            || form.avatarUrl === "" || form.companyId === ""
-            || form.jsExperience === "" || form.reactExperience === "" || form.sex === ""
+        let { form } = this.state;
+        if (form.firstName === '' || form.lastName === ''
+            || form.email === '' || form.password === ''
+            || form.avatarUrl === '' || form.companyId === ''
+            || form.jsExperience === '' || form.reactExperience === '' || form.sex === ''
         ) {
-            return this.setState({emptyFieldsError: true});
+            return this.setState({ emptyFieldsError: true });
         }
 
         if (form.confirmPass !== form.password) {
-            return this.setState({confirmPasswordError: true, passwordError: false, emptyFieldsError: false});
+            return this.setState({ confirmPasswordError: true, passwordError: false, emptyFieldsError: false });
         }
 
         const passw = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (!form.password.match(passw)) {
-            return this.setState({passwordError: true, emptyFieldsError: false});
+            return this.setState({ passwordError: true, emptyFieldsError: false });
         }
 
-        this.setState({confirmPasswordError: false, passwordError: false, emptyFieldsError: false});
-        this.props.onAddUser(form, this.props.history)
+        this.setState({ confirmPasswordError: false, passwordError: false, emptyFieldsError: false });
+        this.props.registerUser(form, this.props.history);
     };
 
 
@@ -82,30 +83,31 @@ class Registration extends Component {
 
         let errors = [];
         if (this.state.emptyFieldsError) {
-            errors.push("Missing required Fields.");
+            errors.push('Missing required Fields.');
         }
         if (this.state.passwordError) {
-            errors.push("Password must have Minimum eight characters, at least one letter and one number.");
+            errors.push('Password must have Minimum eight characters, at least one letter and one number.');
         }
         if (this.state.confirmPasswordError) {
-            errors.push("Password are not matching.")
+            errors.push('Password are not matching.');
         }
         if (this.props.error) {
-            errors.push(this.props.error)
+            errors.push(this.props.error);
         }
-        const {form} = this.state;
+
+        const { form } = this.state;
         let companyOptions = [];
         if (this.props.companies) {
             this.props.companies.forEach(element => {
                 companyOptions = [
                     ...companyOptions,
-                    {key: element.id, value: element.id, text: element.name}
-                ]
+                    { key: element.id, value: element.id, text: element.name }
+                ];
             });
         }
         const genderOptions = [
-            {key: 'male', value: 'male', text: 'Male'},
-            {key: 'female', value: 'female', text: 'Female'}
+            { key: 'male', value: 'male', text: 'Male' },
+            { key: 'female', value: 'female', text: 'Female' }
         ];
         return (
 
@@ -154,7 +156,7 @@ class Registration extends Component {
                                 type='number'
                                 fluid
                                 label='Js Experience'
-                                value={form.jsExperience}
+                                value={parseInt(form.jsExperience)}
                                 onChange={this.handleChange}
                             />
                             <Form.Input
@@ -204,7 +206,7 @@ class Registration extends Component {
                                 type='number'
                                 label='React Experience'
                                 value={form.reactExperience}
-                                onChange={this.handleChange}
+                                onChange={parseInt(this.handleChange)}
                             />
                             <span className='datePickerLabel'>Birth Date</span>
                             <DatePicker
@@ -226,23 +228,23 @@ class Registration extends Component {
                     </Grid.Row>
                 </Grid>
             </Form>
-
-        )
+        );
     }
 }
 
 function mapStateToProps(state) {
-    const {userInfo} = state.userRegister;
-    const {companies} = state.companies;
-    const {error} = state.userRegister;
-    return {companies, error, userInfo}
+    const { companies } = state.companies;
+
+    return {
+        companies,
+        error: state.auth.registerError
+    };
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        companiesFetched: () => dispatch(fetchCompanies()),
-        onAddUser: (userInfo, history) => dispatch(registerUser(userInfo, history))
-    };
+
+const mapDispatchToProps = {
+    fetchCompanies: fetchCompanies,
+    registerUser: registerUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

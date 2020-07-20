@@ -1,19 +1,14 @@
-import React, {Component} from 'react';
-import Main from "./Menu";
-import {connect} from "react-redux";
+import React, { Component } from 'react';
+import Menu from './Menu';
 
 
 class Header extends Component {
     render() {
         return (
-            <Main/>
-        )
+            <Menu/>
+        );
     }
 
 }
 
-const mapStateToProps = (state) => {
-    return {}
-}
-
-export default connect(mapStateToProps)(Header);
+export default Header;
