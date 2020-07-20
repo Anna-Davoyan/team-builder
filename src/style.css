@@ -1,3 +1,11 @@
+body {
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+    padding-bottom: 100px;
+    box-sizing: border-box;
+}
+
 .wrapper {
     margin-right: auto;
     margin-left: auto;
@@ -7,33 +15,65 @@
     margin-top: 30px;
 }
 
-.ui.stacked.segment:after{
-    border-top: 0px solid rgba(34,36,38,.15)!important;
-     background: transparent!important;
-}
-.react-datepicker-wrapper{
-    width: 100%;
-    margin: 0 0 1em;
-}
-.datePickerLabel{
-    display: block;
-    margin: 0 0 .28571429rem 0;
-    color: rgba(0,0,0,.87);
-    font-size: .92857143em;
-    font-weight: 700;
-    text-transform: none;
-}
-.ui.divided.grid:not([class*="vertically divided"])>.row>.column{
-    box-shadow:0px 0px 0px 0px!important;
-}
-.sendButton{
-    margin-top: 22px!important;
+.ui.stacked.segment:after {
+    border-top: 0px solid rgba(34, 36, 38, .15) !important;
+    background: transparent !important;
 }
 
-@media only screen and (max-width: 767px){
-    .ui.stackable.divided:not(.vertically).grid>.row>.column{
-        border-top: 0!important;
-        padding-top: 0rem!important;
+.react-datepicker-wrapper {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
+    max-width: 100%;
+    flex: 1 0 auto;
+    outline: 0;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    text-align: left;
+    line-height: 1.21428571em;
+    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    padding: .67857143em 1em;
+    background: #fff;
+    border: 1px solid rgba(34, 36, 38, .15);
+    color: rgba(0, 0, 0, .87);
+    border-radius: .28571429rem;
+    transition: box-shadow .1s ease, border-color .1s ease;
+    box-shadow: none;
+    width: 100%;
+}
+
+.react-datepicker-wrapper input {
+    border: 0;
+}
+
+.ui.divided.grid:not([class*="vertically divided"]) > .row > .column {
+    box-shadow: 0px 0px 0px 0px !important;
+}
+
+.ui.table td {
+    padding: 12px 8px !important;
+}
+
+.sendButton {
+    margin-top: 19px !important;
+    padding: 11px 0px !important;
+}
+
+.profile td  {
+    border: 0px !important;
+}
+
+@media only screen and (max-width: 767px) {
+    .ui.stackable.divided:not(.vertically).grid > .column:not(.row),
+    .ui.stackable.divided:not(.vertically).grid > .row > .column {
+        border-top: 0 !important;
+        padding-top: 0rem !important;
+    }
+
+    .ui.basic.table tbody tr {
+        border-bottom: 0px !important;
+        box-shadow: 0px 0px 0px 0px !important;
+        padding: 0px 0px !important;
     }
 
 }
+

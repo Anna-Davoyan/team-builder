@@ -12,19 +12,11 @@ class Menu extends Component {
         this.props.logout();
     };
 
-
     render() {
         const { user } = this.props;
 
         return (
             <SemanticMenu pointing secondary>
-
-                <SemanticMenu.Item
-                    name='home'
-                    as={NavLink}
-                    to='/'
-                />
-
                 {!user && (
                     <>
                         <SemanticMenu.Item
@@ -40,10 +32,18 @@ class Menu extends Component {
                         />
                     </>
                 )}
-
-
                 {user && (
                     <>
+                        <SemanticMenu.Item
+                            name='userProfile'
+                            as={NavLink}
+                            to={'/user/profile'}
+                        />
+                        <SemanticMenu.Item
+                            name='Teams'
+                            as={NavLink}
+                            to='/teams'
+                        />
                         <SemanticMenu.Item
                             name='Topics'
                             as={NavLink}

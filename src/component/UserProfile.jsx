@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Image,Message } from 'semantic-ui-react';
+import { Button, Form, Image, Message, Table } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
@@ -24,7 +24,6 @@ class UserProfile extends Component {
                 sex: this.userData.sex
             },
             emptyFieldsError: false,
-            loading:false
         };
 
     }
@@ -58,11 +57,8 @@ class UserProfile extends Component {
             return this.setState({ emptyFieldsError: true });
         }
 
-
-        this.setState({loading: true, emptyFieldsError: false });
-        this.props.updateUser(form).then(user=>{
-            this.setState({ loading: false });
-        });
+        this.setState({ emptyFieldsError: false });
+        this.props.updateUser(form);
     };
 
 
@@ -92,115 +88,139 @@ class UserProfile extends Component {
         ];
 
         return (
-            <Grid>
-                <Grid.Column width={4}>
-                    <Image src={form.avatarUrl}/>
-                </Grid.Column>
-                <Grid.Column width={9}>
+            <Table basic='very'>
+                <Table.Body>
+                    <Table.Row className='profile'>
+                        <Table.HeaderCell/>
+                        <Table.HeaderCell colSpan='2'>
+                            {errors.length !== 0 &&
+                            <Message
+                                color='red'
+                                list={
+                                    errors.map((error, index) => (
+                                        <span key={index}>{error}</span>
+                                    ))
+                                }
+                            />
+                            }
+                        </Table.HeaderCell>
+                    </Table.Row>
+                    <Table.Row className='profile'>
+                        <Table.Cell rowSpan='5' verticalAlign='top'>
+                            <Image centered width={200} src={form.avatarUrl}/>
+                        </Table.Cell>
+                        <Table.Cell>
+                            <Form.Input
+                                name='firstName'
+                                fluid
+                                value={form.firstName}
+                                onChange={this.handleChange}
+                                label='First name'
+                            />
+                        </Table.Cell>
+                        <Table.Cell>
+                            <Form.Input
+                                name='lastName'
+                                fluid
+                                label='Last name'
+                                value={form.lastName}
+                                onChange={this.handleChange}
+                            />
+                        </Table.Cell>
+                    </Table.Row>
+                    <Table.Row className='profile'>
+                        <Table.Cell>
+                            <Form.Select
+                                fluid
+                                options={genderOptions}
+                                value={form.sex}
+                                onChange={this.handleSelectChange}
+                                name='sex'
+                                label='Gender'
+                            />
 
+                        </Table.Cell>
+                        <Table.Cell>
+                            <Form.Select
+                                fluid
+                                label='Company'
+                                options={companyOptions}
+                                value={parseInt(form.companyId)}
+                                onChange={this.handleSelectChange}
+                                name='companyId'
 
-                    <Form size='large'>
+                            />
+                        </Table.Cell>
+                    </Table.Row>
+                    <Table.Row className='profile'>
+                        <Table.Cell>
+                            <Form.Input
+                                name="email"
+                                fluid
+                                value={form.email}
+                                onChange={this.handleChange}
+                                label='E-mail address'
+                            />
+                        </Table.Cell>
+                        <Table.Cell>
+                            <Form.Input
+                                name='avatarUrl'
+                                fluid
+                                label='Avatar URL'
+                                value={form.avatarUrl}
+                                onChange={this.handleChange}
+                            />
+                        </Table.Cell>
 
-                        {errors.length !== 0 &&
-                        <Message negative>
-                            <ul>
-                                {errors.map((error, index) => (
-                                    <li key={index}>{error}</li>
-                                ))}
-                            </ul>
-                        </Message>
-                        }
+                    </Table.Row>
+                    <Table.Row className='profile'>
+                        <Table.Cell>
+                            <Form.Input
+                                name='jsExperience'
+                                type='number'
+                                fluid
+                                label='Js Experience'
+                                value={form.jsExperience}
+                                onChange={this.handleChange}
+                            />
+                        </Table.Cell>
+                        <Table.Cell>
+                            <Form.Input
+                                name='reactExperience'
+                                fluid
+                                type='number'
+                                label='React Experience'
+                                value={form.reactExperience}
+                                onChange={this.handleChange}
+                            />
+                        </Table.Cell>
 
-                        <Grid columns={2} container divided stackable>
-                            <Grid.Row>
-                                <Grid.Column>
-                                    <Form.Input
-                                        name='firstName'
-                                        fluid
-                                        value={form.firstName}
-                                        onChange={this.handleChange}
-                                        label='First name'
-                                    />
-                                    <Form.Select
-                                        fluid
-                                        options={genderOptions}
-                                        value={form.sex}
-                                        onChange={this.handleSelectChange}
-                                        name='sex'
-                                        label='Gender'
-                                    />
-                                    <Form.Input
-                                        name="email"
-                                        fluid
-                                        value={form.email}
-                                        onChange={this.handleChange}
-                                        label='E-mail address'
-                                    />
-                                    <Form.Input
-                                        name='jsExperience'
-                                        type='number'
-                                        fluid
-                                        label='Js Experience'
-                                        value={form.jsExperience}
-                                        onChange={this.handleChange}
-                                    />
-                                    <span className='datePickerLabel'>Birth Date</span>
-                                    <DatePicker
-                                        selected={moment(form.birthDate).toDate()}
-                                        onChange={this.handleChangeDate}
-                                        placeholderText="Click to select a date"
-                                    />
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <Form.Input
-                                        name='lastName'
-                                        fluid
-                                        label='Last name'
-                                        value={form.lastName}
-                                        onChange={this.handleChange}
-                                    />
-                                    <Form.Select
-                                        fluid
-                                        label='Company'
-                                        options={companyOptions}
-                                        value={parseInt(form.companyId)}
-                                        onChange={this.handleSelectChange}
-                                        name='companyId'
+                    </Table.Row>
+                    <Table.Row className='profile'>
+                        <Table.Cell>
+                            <span className='datePickerLabel'>Birth Date</span>
+                            <DatePicker
+                                selected={moment(form.birthDate).toDate()}
+                                onChange={this.handleChangeDate}
+                                placeholderText="Click to select a date"
+                            />
+                        </Table.Cell>
+                        <Table.Cell>
+                            <Button
+                                loading={this.state.loading}
+                                className='sendButton'
+                                onClick={this.handleUpdate}
+                                color='teal'
+                                fluid
+                                size='large'
+                            >
+                                Update
+                            </Button>
+                        </Table.Cell>
 
-                                    />
-                                    <Form.Input
-                                        name='avatarUrl'
-                                        fluid
-                                        label='Avatar URL'
-                                        value={form.avatarUrl}
-                                        onChange={this.handleChange}
-                                    />
-                                    <Form.Input
-                                        name='reactExperience'
-                                        fluid
-                                        type='number'
-                                        label='React Experience'
-                                        value={form.reactExperience}
-                                        onChange={this.handleChange}
-                                    />
-
-                                    <Button
-                                        loading={this.state.loading}
-                                        className='sendButton'
-                                        onClick={this.handleUpdate}
-                                        color='teal'
-                                        fluid
-                                        size='large'
-                                    >
-                                        Update
-                                    </Button>
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
-                    </Form>
-                </Grid.Column>
-            </Grid>
-
+                    </Table.Row>
+                </Table.Body>
+            </Table>
         );
     }
 }

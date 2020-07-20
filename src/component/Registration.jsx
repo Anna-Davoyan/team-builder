@@ -11,21 +11,22 @@ import { registerUser } from '../store/actions/authActions';
 class Registration extends Component {
     state = {
         form: {
-            email: 'davoyanan4@gmail.com',
-            password: 'loveHarut4ever',
-            confirmPass: 'loveHarut4ever',
-            firstName: 'Anna',
-            lastName: 'Davoyan',
+            email: '',
+            password: '',
+            confirmPass: '',
+            firstName: '',
+            lastName: '',
             birthDate: moment().format('YYYY-MM-DD'),
-            avatarUrl: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+            avatarUrl: '',
             companyId: 1,
             jsExperience: 0,
             reactExperience: 0,
-            sex: 'female'
+            sex: ''
         },
         confirmPasswordError: false,
         passwordError: false,
-        emptyFieldsError: false
+        emptyFieldsError: false,
+        loading: false
     };
 
     componentDidMount() {
@@ -62,11 +63,11 @@ class Registration extends Component {
             || form.avatarUrl === '' || form.companyId === ''
             || form.jsExperience === '' || form.reactExperience === '' || form.sex === ''
         ) {
-            return this.setState({ emptyFieldsError: true });
+            return this.setState({ emptyFieldsError: true});
         }
 
         if (form.confirmPass !== form.password) {
-            return this.setState({ confirmPasswordError: true, passwordError: false, emptyFieldsError: false });
+            return this.setState({ confirmPasswordError: true, passwordError: false, emptyFieldsError: false});
         }
 
         const passw = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -74,13 +75,14 @@ class Registration extends Component {
             return this.setState({ passwordError: true, emptyFieldsError: false });
         }
 
-        this.setState({ confirmPasswordError: false, passwordError: false, emptyFieldsError: false });
-        this.props.registerUser(form, this.props.history);
+        this.setState({ confirmPasswordError: false, passwordError: false, emptyFieldsError: false, loading:true });
+        this.props.registerUser(form, this.props.history).then((data)=>{
+            this.setState({ loading: false});
+        });
     };
 
 
     render() {
-
         let errors = [];
         if (this.state.emptyFieldsError) {
             errors.push('Missing required Fields.');
@@ -115,16 +117,15 @@ class Registration extends Component {
                 <Header as='h2' color='teal' textAlign='center'>
                     New account
                 </Header>
-
-                {errors.length !== 0 &&
-                <Message negative>
-                    <ul>
-                        {errors.map((error, index) => (
-                            <li key={index}>{error}</li>
-                        ))}
-                    </ul>
-                </Message>
-                }
+                <Message
+                    error={!errors.length}
+                    color='red'
+                    list={
+                        errors.map((error, index) => (
+                            <span key={index}>{error}</span>
+                        ))
+                    }
+                />
 
                 <Grid columns={2} container divided stackable>
                     <Grid.Row>
@@ -156,7 +157,7 @@ class Registration extends Component {
                                 type='number'
                                 fluid
                                 label='Js Experience'
-                                value={parseInt(form.jsExperience)}
+                                value={form.jsExperience}
                                 onChange={this.handleChange}
                             />
                             <Form.Input
@@ -188,7 +189,7 @@ class Registration extends Component {
                                 fluid
                                 label='Company'
                                 options={companyOptions}
-                                value={parseInt(form.companyId)}
+                                value={form.companyId}
                                 onChange={this.handleSelectChange}
                                 name='companyId'
 
@@ -206,7 +207,7 @@ class Registration extends Component {
                                 type='number'
                                 label='React Experience'
                                 value={form.reactExperience}
-                                onChange={parseInt(this.handleChange)}
+                                onChange={this.handleChange}
                             />
                             <span className='datePickerLabel'>Birth Date</span>
                             <DatePicker
@@ -216,6 +217,7 @@ class Registration extends Component {
                             />
 
                             <Button
+                                loading={this.state.loading}
                                 className='sendButton'
                                 onClick={this.handleSignUp}
                                 color='teal'

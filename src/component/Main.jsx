@@ -5,7 +5,7 @@ import { Redirect, Route, Switch } from 'react-router';
 import { fetchUser } from '../store/actions/userActions';
 import Teams from './Teams';
 import UserProfile from './UserProfile';
-import Topics from './topics/Topics';
+import Topics from './Topics';
 import Projects from './Projects';
 
 class Main extends Component {
@@ -16,7 +16,6 @@ class Main extends Component {
         const { userData, token } = this.props;
 
         if (token && !userData) {
-            // this.setState({loading:true})
             this.props.fetchUser();
         }
     }
@@ -45,7 +44,7 @@ class Main extends Component {
             );
         }
 
-        return <div></div>;
+        return <></>;
     }
 
 }

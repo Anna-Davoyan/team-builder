@@ -15,10 +15,16 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, projects: action.payload, error: undefined };
         case FETCH_PROJECTS_FAILURE:
             return { ...state, error: action.error, projects: [] };
+
         case PROJECT_VOTED_SUCCESS:
             const projects = state.projects.map(project => {
                 if (project.id === action.payload.id) {
                     project.votedByMe = !project.votedByMe;
+                    if (project.votedByMe) {
+                        project.votingsCount = project.votingsCount + 1;
+                    } else {
+                        project.votingsCount = project.votingsCount - 1;
+                    }
                     return project;
                 }
                 return project;

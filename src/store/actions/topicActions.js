@@ -5,7 +5,9 @@ import {
     DELETE_TOPIC_FAILURE,
     DELETE_TOPIC_SUCCESS,
     TOPICS_FETCH_FAILURE,
-    TOPICS_FETCH_SUCCESS, VOTED_FAILURE, VOTED_SUCCESS
+    TOPICS_FETCH_SUCCESS,
+    VOTED_FAILURE,
+    VOTED_SUCCESS
 } from './actionTypes';
 
 export const fetchTopics = () => (dispatch) => {
@@ -73,7 +75,7 @@ export const deleteTopic = (id) => (dispatch) => {
 };
 
 export const votedUnVoted = (data) => (dispatch) => {
-    return apiHelper.votedUnVoted(data).then(response=>{
+    return apiHelper.votedUnVoted(data).then(response => {
         if (response.status !== 200) {
             dispatch({
                 type: VOTED_FAILURE,

@@ -1,5 +1,4 @@
 import {
-    LOGIN_SUCCESS,
     LOGOUT,
     UPDATE_FAILURE,
     UPDATE_SUCCESS,
@@ -14,11 +13,10 @@ export default function(state = INITIAL_STATE, action) {
         case USER_UPDATED:
             return { ...state, userData: action.payload };
 
-        case LOGIN_SUCCESS:
-            return { ...state, userData: action.payload };
         case UPDATE_FAILURE:
         case UPDATE_SUCCESS:
             return { ...state, userData: action.payload };
+
         case LOGOUT:
             const newState = { ...state };
             delete newState.userData;

@@ -6,8 +6,8 @@ import { userLogin } from '../store/actions/authActions';
 
 class Login extends Component {
     state = {
-        email: 'davoyanan1@gmail.com',
-        password: 'loveHarut4ever',
+        email: '',
+        password: '',
         error: false,
         remember: false,
         loading: false
@@ -17,14 +17,16 @@ class Login extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
-
     };
+
     onChangeCheck = () => {
         this.setState({ remember: !this.state.remember });
     };
 
+
     onLoginClickHandler = () => {
         const userInfo = this.state;
+
         if (userInfo.email === '' || userInfo.password === '') {
             return this.setState({ error: true });
         }
@@ -41,8 +43,8 @@ class Login extends Component {
     };
 
     render() {
-
         let errors = [];
+
         if (this.state.error) {
             errors.push('Missing required Fields.');
         }
@@ -57,15 +59,15 @@ class Login extends Component {
 
                 <Grid textAlign='center' verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
-                        {errors.length !== 0 &&
-                        <Message negative>
-                            <ul>
-                                {errors.map((error, index) => (
-                                    <li key={index}>{error}</li>
-                                ))}
-                            </ul>
-                        </Message>
-                        }
+                        <Message
+                            error={!errors.length}
+                            color='red'
+                            list={
+                                errors.map((error, index) => (
+                                    <span key={index}>{error}</span>
+                                ))
+                            }
+                        />
                         <Form.Input
                             name='email'
                             fluid
