@@ -50,7 +50,7 @@ class Registration extends Component {
 
     handleChangeDate = date => {
         const form = { ...this.state.form };
-        form.birthDate = moment(date.birthDate).format('YYYY-MM-DD');
+        form.birthDate = moment(date).format('YYYY-MM-DD');
         this.setState({
             form
         });
@@ -63,11 +63,11 @@ class Registration extends Component {
             || form.avatarUrl === '' || form.companyId === ''
             || form.jsExperience === '' || form.reactExperience === '' || form.sex === ''
         ) {
-            return this.setState({ emptyFieldsError: true});
+            return this.setState({ emptyFieldsError: true });
         }
 
         if (form.confirmPass !== form.password) {
-            return this.setState({ confirmPasswordError: true, passwordError: false, emptyFieldsError: false});
+            return this.setState({ confirmPasswordError: true, passwordError: false, emptyFieldsError: false });
         }
 
         const passw = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -75,9 +75,9 @@ class Registration extends Component {
             return this.setState({ passwordError: true, emptyFieldsError: false });
         }
 
-        this.setState({ confirmPasswordError: false, passwordError: false, emptyFieldsError: false, loading:true });
-        this.props.registerUser(form, this.props.history).then((data)=>{
-            this.setState({ loading: false});
+        this.setState({ confirmPasswordError: false, passwordError: false, emptyFieldsError: false, loading: true });
+        this.props.registerUser(form, this.props.history).then((data) => {
+            this.setState({ loading: false });
         });
     };
 
@@ -117,8 +117,8 @@ class Registration extends Component {
                 <Header as='h2' color='teal' textAlign='center'>
                     New account
                 </Header>
-                <Message
-                    error={!errors.length}
+                {errors.length !== 0 &&
+                < Message
                     color='red'
                     list={
                         errors.map((error, index) => (
@@ -126,6 +126,7 @@ class Registration extends Component {
                         ))
                     }
                 />
+                }
 
                 <Grid columns={2} container divided stackable>
                     <Grid.Row>
@@ -209,12 +210,15 @@ class Registration extends Component {
                                 value={form.reactExperience}
                                 onChange={this.handleChange}
                             />
-                            <span className='datePickerLabel'>Birth Date</span>
-                            <DatePicker
-                                selected={moment(form.birthDate).toDate()}
-                                onChange={this.handleChangeDate}
-                                placeholderText="Click to select a date"
-                            />
+                            <div className='registration-datePicker'>
+                                <span className='datePickerLabel'>Birth Date</span>
+                                <DatePicker
+                                    selected={moment(form.birthDate).toDate()}
+                                    onChange={this.handleChangeDate}
+                                    placeholderText="Click to select a date"
+                                />
+                            </div>
+
 
                             <Button
                                 loading={this.state.loading}

@@ -3,21 +3,21 @@ import apiHelper from "../../helpers/apiHelper";
 
 export const registerUser = (data, history) => (dispatch) => {
     return apiHelper.registerUser(data).then(response => {
-        response.text().then(response => {
-            return response.text().then((data) => {
-                if (response.status !== 200) {
-                    dispatch({
-                        type: REGISTER_FAILURE,
-                        error: data
-                    })
-                } else {
-                    history.push("/auth/login")
-                }
-            });
-        }).catch((error) => {
+        response.text().then((data) => {
+            if (response.status !== 200) {
+                dispatch({
+                    type: REGISTER_FAILURE,
+                    error: data
+                })
+            } else {
+                history.push("/auth/login")
+            }
+        });
+        return data;
+    })
+        .catch((error) => {
             console.error(error);
         });
-    })
 };
 
 export const userLogin = (userData, rememberToken) => dispatch => {
@@ -50,3 +50,5 @@ export const userLogin = (userData, rememberToken) => dispatch => {
         console.error(error);
     });
 };
+
+

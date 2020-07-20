@@ -10,9 +10,9 @@ const rootReducer = combineReducers({
     auth: auth,
     companies: company,
     user: user,
-    topics:topic,
-    projects:projects,
-    teams:teams
+    topics: topic,
+    projects: projects,
+    teams: teams
 });
 
 export default rootReducer;

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router';
 import { fetchUser } from '../store/actions/userActions';
-import Teams from './Teams';
 import UserProfile from './UserProfile';
 import Topics from './Topics';
 import Projects from './Projects';
+import Teams from './Teams';
 
 class Main extends Component {
 

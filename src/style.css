@@ -20,7 +20,7 @@ body {
     background: transparent !important;
 }
 
-.react-datepicker-wrapper {
+.userProfile .react-datepicker-wrapper {
     -webkit-appearance: none;
     -moz-appearance: none;
     margin: 0;
@@ -41,6 +41,18 @@ body {
     width: 100%;
 }
 
+.registration-datePicker .react-datepicker-wrapper{
+    width: 100%;
+    margin: 0 0 1em;
+}
+.registration-datePicker .datePickerLabel{
+    display: block;
+    margin: 0 0 .28571429rem 0;
+    color: rgba(0,0,0,.87);
+    font-size: .92857143em;
+    font-weight: 700;
+    text-transform: none;
+}
 .react-datepicker-wrapper input {
     border: 0;
 }

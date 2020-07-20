@@ -24,6 +24,7 @@ class UserProfile extends Component {
                 sex: this.userData.sex
             },
             emptyFieldsError: false,
+            loading: false
         };
 
     }
@@ -57,8 +58,10 @@ class UserProfile extends Component {
             return this.setState({ emptyFieldsError: true });
         }
 
-        this.setState({ emptyFieldsError: false });
-        this.props.updateUser(form);
+        this.setState({ loading: true, emptyFieldsError: false });
+        this.props.updateUser(form).then(user => {
+            this.setState({ loading: false });
+        });
     };
 
 
@@ -198,12 +201,15 @@ class UserProfile extends Component {
                     </Table.Row>
                     <Table.Row className='profile'>
                         <Table.Cell>
-                            <span className='datePickerLabel'>Birth Date</span>
-                            <DatePicker
-                                selected={moment(form.birthDate).toDate()}
-                                onChange={this.handleChangeDate}
-                                placeholderText="Click to select a date"
-                            />
+                            <div className='userProfile'>
+                                <span className='datePickerLabel'>Birth Date</span>
+                                <DatePicker
+                                    selected={moment(form.birthDate).toDate()}
+                                    onChange={this.handleChangeDate}
+                                    placeholderText="Click to select a date"
+                                />
+                            </div>
+
                         </Table.Cell>
                         <Table.Cell>
                             <Button
@@ -228,8 +234,8 @@ class UserProfile extends Component {
 function mapStateToProps(state) {
 
     const { companies } = state.companies;
-    const { userData } = state.user;
-    return { companies, userData };
+    const { userData, error } = state.user;
+    return { companies, userData, error };
 
 }
 

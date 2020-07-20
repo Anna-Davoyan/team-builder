@@ -8,7 +8,7 @@ class Topics extends Component {
     state = {
         topic: '',
         error: false,
-        loading:false
+        loading: false
     };
 
     componentDidMount() {
@@ -33,7 +33,7 @@ class Topics extends Component {
     handleDelete = (id, canDelete) => {
         this.setState({ loading: true });
         if (canDelete) {
-            return this.props.deleteTopic({ id }).then(()=>{
+            return this.props.deleteTopic({ id }).then(() => {
                 this.setState({ loading: false });
             });
         }
@@ -136,11 +136,7 @@ class Topics extends Component {
 function mapStateToProps(state) {
     const { topics, topic, error } = state.topics;
 
-    return {
-        topics,
-        topic,
-        error
-    };
+    return { topics, topic, error };
 }
 
 const mapDispatchToProps = {

@@ -28,7 +28,7 @@ class Teams extends Component {
                             <Table.Cell>{team.name}</Table.Cell>
                             <Table.Cell>{team.topic}</Table.Cell>
                             <Table.Cell>{team.project}</Table.Cell>
-                            <Table.Cell>{team.members.map(member=>(
+                            <Table.Cell>{team.members.map(member => (
                                 <p>{member.firstname} - {member.lastName} - {member.avatarUrl}</p>
                             ))}</Table.Cell>
                         </Table.Row>
@@ -36,13 +36,11 @@ class Teams extends Component {
                 </Table.Body>
             </Table>
         );
-
     }
 }
 
 function mapStateToProps(state) {
     const { teams } = state.teams;
-
     return {
         teams
     };
