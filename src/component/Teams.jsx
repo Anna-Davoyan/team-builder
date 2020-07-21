@@ -15,8 +15,8 @@ class Teams extends Component {
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Name</Table.HeaderCell>
-                        <Table.HeaderCell>Topic</Table.HeaderCell>
-                        <Table.HeaderCell>Project</Table.HeaderCell>
+                        <Table.HeaderCell >Topic</Table.HeaderCell>
+                        <Table.HeaderCell >Project</Table.HeaderCell>
                         <Table.HeaderCell>Members</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
@@ -28,8 +28,8 @@ class Teams extends Component {
                             <Table.Cell>{team.name}</Table.Cell>
                             <Table.Cell>{team.topic}</Table.Cell>
                             <Table.Cell>{team.project}</Table.Cell>
-                            <Table.Cell>{team.members.map(member => (
-                                <p>{member.firstname} - {member.lastName} - {member.avatarUrl}</p>
+                            <Table.Cell>{team.members.map((member,index) => (
+                                <p key={index}>{member.firstname}  {member.lastName}</p>
                             ))}</Table.Cell>
                         </Table.Row>
                     ))}

@@ -40,6 +40,9 @@ body {
     box-shadow: none;
     width: 100%;
 }
+.userProfile input{
+    outline: none;
+}
 
 .registration-datePicker .react-datepicker-wrapper{
     width: 100%;

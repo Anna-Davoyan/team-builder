@@ -43,11 +43,14 @@ export const updateUser = (userData) => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-    localStorage.clear();
-    sessionStorage.clear();
-
-    return dispatch({
-        type: LOGOUT
+    return apiHelper.logout().then(response => {
+        if (response.status === 200) {
+                localStorage.clear();
+                sessionStorage.clear();
+                return dispatch({
+                    type: LOGOUT
+                });
+        }
     });
 };
 

@@ -1,3 +1,4 @@
+
 import { BASE_URL } from './constants';
 
 class ApiHelper {
@@ -8,10 +9,6 @@ class ApiHelper {
 
     setToken(token) {
         this.token = token;
-    }
-
-    removeToken() {
-        this.token = null;
     }
 
     fetchUser() {
@@ -121,6 +118,15 @@ class ApiHelper {
 
     fetchTeams() {
         return fetch(BASE_URL + '/api/v1/teams', {
+            headers: {
+                'token': this.token,
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
+    logout() {
+        return fetch(BASE_URL + '/api/v1/users/logout', {
             headers: {
                 'token': this.token,
                 'Content-Type': 'application/json'

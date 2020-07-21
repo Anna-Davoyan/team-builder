@@ -117,7 +117,7 @@ class Topics extends Component {
                                     <Icon name='heart'/>
                                     Like
                                 </Button>
-                                <Label as='a' basic pointing='left'>
+                                <Label style={{width: '43px'}} as='a' basic pointing='left'>
                                     {topic.votingsCount}
                                 </Label>
                             </Button>
