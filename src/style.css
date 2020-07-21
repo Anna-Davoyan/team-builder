@@ -7,12 +7,10 @@ body {
 }
 
 .wrapper {
-    margin-right: auto;
-    margin-left: auto;
+    margin: 30px auto;
     max-width: 960px;
     padding-right: 10px;
     padding-left: 10px;
-    margin-top: 30px;
 }
 
 .ui.stacked.segment:after {
