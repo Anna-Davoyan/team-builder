@@ -11,7 +11,7 @@ class Teams extends Component {
     render() {
         const { teams } = this.props;
         return (
-            <Table celled fixed singleLine>
+            <Table celled  fixed>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Name</Table.HeaderCell>
